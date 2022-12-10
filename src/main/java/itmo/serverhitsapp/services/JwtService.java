@@ -46,7 +46,6 @@ public class JwtService {
         return UserJwtInfo.builder()
                 .username(userTokenClaims.getUsername())
                 .token(refreshToken)
-                .role(userTokenClaims.getRole())
                 .build();
     }
 
@@ -58,12 +57,11 @@ public class JwtService {
         } catch (JwtException e) {
             throw new JwtException("Сессия истекла!");
         } finally {
-            jwtRepository.deleteByToken(refreshToken);
+            removeSessionByRefreshToken(refreshToken);
         }
 
         return UserTokenClaims.builder()
                 .username(userJwtInfo.getUsername())
-                .role(userJwtInfo.getRole())
                 .build();
     }
 

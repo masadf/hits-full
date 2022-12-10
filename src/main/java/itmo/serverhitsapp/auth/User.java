@@ -1,6 +1,7 @@
-package itmo.serverhitsapp.model;
+package itmo.serverhitsapp.auth;
 
 import itmo.serverhitsapp.jwt.UserJwtInfo;
+import itmo.serverhitsapp.hits.Hit;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +27,10 @@ public class User implements UserDetails {
     @OneToMany
     @JoinColumn(name = "username", referencedColumnName = "username")
     private List<UserJwtInfo> sessions;
+
+    @OneToMany
+    @JoinColumn(name = "owner", referencedColumnName = "username")
+    private List<Hit> hits;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

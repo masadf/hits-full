@@ -9,5 +9,4 @@ import lombok.Data;
 @Data
 public class UserTokenClaims {
     private String username;
-    private Role role;
 }

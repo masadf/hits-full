@@ -1,7 +1,7 @@
 package itmo.serverhitsapp.services;
 
 import itmo.serverhitsapp.exceptions.IncorrectUserCredentialsException;
-import itmo.serverhitsapp.model.User;
+import itmo.serverhitsapp.auth.User;
 import itmo.serverhitsapp.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class HitsUsersDetailsService implements UserDetailsService {
+public class UsersDetailsService implements UserDetailsService {
     @Autowired
     private UsersRepository usersRepository;
 
@@ -22,6 +22,7 @@ public class HitsUsersDetailsService implements UserDetailsService {
         if (userOptional.isEmpty()) {
             throw new IncorrectUserCredentialsException("Данный пользователь не найден!");
         }
+
         return usersRepository.findById(username).get();
     }
 }

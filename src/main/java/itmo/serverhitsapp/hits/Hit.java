@@ -1,4 +1,4 @@
-package itmo.serverhitsapp.model;
+package itmo.serverhitsapp.hits;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,4 +24,6 @@ public class Hit {
     private Date bornDate;
     private long executionTime;
     private boolean isHit;
+    @JoinColumn
+    private String owner;
 }

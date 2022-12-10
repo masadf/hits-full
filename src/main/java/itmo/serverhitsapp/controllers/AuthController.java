@@ -4,7 +4,7 @@ import itmo.serverhitsapp.exceptions.NoTokenException;
 import itmo.serverhitsapp.jwt.TokenResponse;
 import itmo.serverhitsapp.services.AuthService;
 import itmo.serverhitsapp.jwt.TokenPack;
-import itmo.serverhitsapp.model.UserCredentials;
+import itmo.serverhitsapp.auth.UserCredentials;
 import itmo.serverhitsapp.services.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

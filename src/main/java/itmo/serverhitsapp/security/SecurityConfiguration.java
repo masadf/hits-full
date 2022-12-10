@@ -1,8 +1,7 @@
 package itmo.serverhitsapp.security;
 
-
 import itmo.serverhitsapp.auth.JwtAuthFilter;
-import itmo.serverhitsapp.services.HitsUsersDetailsService;
+import itmo.serverhitsapp.services.UsersDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,19 +19,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfiguration {
     @Autowired
-    private HitsUsersDetailsService hitsUsersDetailsService;
+    private UsersDetailsService usersDetailsService;
 
     @Autowired
     private JwtAuthFilter jwtAuthFilter;
-
-    @Autowired
-    private SecurityExceptionsHandler securityExceptionsHandler;
 
     @Bean
     public AuthenticationManager customAuthenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject
                 (AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(hitsUsersDetailsService)
+        authenticationManagerBuilder.userDetailsService(usersDetailsService)
                 .passwordEncoder(bCryptPasswordEncoder());
         return authenticationManagerBuilder.build();
     }
@@ -44,9 +40,8 @@ public class SecurityConfiguration {
                 .formLogin().disable()
                 .logout().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/registration", "/login").permitAll()
-                .anyRequest().authenticated()
-                .and().exceptionHandling().authenticationEntryPoint(securityExceptionsHandler);
+                .requestMatchers(HttpMethod.POST, "/registration", "/login", "/refresh").permitAll()
+                .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

@@ -18,6 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+import static jakarta.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -36,6 +37,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         } catch (JwtException | IncorrectUserCredentialsException ignored) {
+            response.setStatus(SC_UNAUTHORIZED);
         } finally {
             filterChain.doFilter(request, response);
         }

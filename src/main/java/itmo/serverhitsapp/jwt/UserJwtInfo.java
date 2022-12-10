@@ -18,6 +18,5 @@ public class UserJwtInfo {
     private long id;
     @JoinColumn
     private String username;
-    private Role role;
     private String token;
 }

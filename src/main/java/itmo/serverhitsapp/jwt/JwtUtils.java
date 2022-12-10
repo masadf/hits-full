@@ -3,7 +3,6 @@ package itmo.serverhitsapp.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.TextCodec;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -27,7 +26,7 @@ public class JwtUtils {
                     .parseClaimsJws(refreshToken)
                     .getBody();
         } catch (JwtException e) {
-            throw new JwtException("Токен невалиден!");
+            throw new JwtException("Невалидный токен!");
         }
         return buildUserTokenClaims(jwtClaims);
     }
@@ -40,7 +39,7 @@ public class JwtUtils {
                     .parseClaimsJws(accessToken)
                     .getBody();
         } catch (JwtException | IllegalArgumentException e) {
-            throw new JwtException("Токен невалиден!");
+            throw new JwtException("Невалидный токен!");
         }
 
         return buildUserTokenClaims(jwtClaims);
@@ -75,12 +74,10 @@ public class JwtUtils {
     private UserTokenClaims buildUserTokenClaims(Claims claims) {
         return UserTokenClaims.builder()
                 .username(claims.get("username", String.class))
-                .role(Role.valueOf(claims.get("role", String.class)))
                 .build();
     }
 
     private Map<String, Object> tokenDataToMap(UserTokenClaims userTokenClaims) {
-        return Map.of("username", userTokenClaims.getUsername(),
-                "role", userTokenClaims.getRole());
+        return Map.of("username", userTokenClaims.getUsername());
     }
 }

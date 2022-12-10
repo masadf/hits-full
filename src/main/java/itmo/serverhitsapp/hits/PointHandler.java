@@ -1,5 +1,4 @@
-package itmo.serverhitsapp.model;
-
+package itmo.serverhitsapp.hits;
 
 import itmo.serverhitsapp.exceptions.InvalidParameterException;
 import org.springframework.stereotype.Component;
@@ -11,7 +10,7 @@ import static java.lang.Math.pow;
 @Component
 public class PointHandler {
 
-    public Hit getHitInfo(Point point) {
+    public Hit calculateHitInfo(Point point) {
         long startExecution = new Date().getTime();
         validatePoint(point);
         return Hit.builder()
